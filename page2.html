@@ -24,51 +24,52 @@
         <button class="button" onclick="submitData()">終了</button>
     </div>
 
-    <script>
-        function submitData() {
-            var nickname = document.getElementById('nickname').value;
-            var name = document.getElementById('name').value;
-            var score = document.getElementById('score').value;
-            
-            if (!nickname.trim() || !name.trim() || !score.trim()) {
-                alert('必要項目を入力してください。');
-                return;
-            }
+<script>
+    function submitData() {
+        var nickname = document.getElementById('nickname').value;
+        var name = document.getElementById('name').value;
+        var score = document.getElementById('score').value;
 
-            var confirmation = confirm('確認しましたか？');
-            if (confirmation) {
-                var data = {
-                    nickname: nickname,
-                    name: name,
-                    score: score
-                };
-
-                fetch('https://script.google.com/macros/s/AKfycby9dqzMlfw3w1tjV9HFnX9NLhOXWDDtWBHD6cGEUoo_8Gbg9Bpsu2g9UtGBY9q6M8hn/exec', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(text => {
-                    if (text === 'success') {
-                        window.location.href = 'page3.html';
-                    } else {
-                        alert('送信に失敗しました。');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('送信に失敗しました。');
-                });
-            }
+        if (!nickname.trim() || !name.trim() || !score.trim()) {
+            alert('必要項目を入力してください。');
+            return;
         }
-    </script>
+
+        var confirmation = confirm('確認しましたか？');
+        if (confirmation) {
+            var data = {
+                nickname: nickname,
+                name: name,
+                score: score
+            };
+
+            fetch('https://script.google.com/macros/s/AKfycby9dqzMlfw3w1tjV9HFnX9NLhOXWDDtWBHD6cGEUoo_8Gbg9Bpsu2g9UtGBY9q6M8hn/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+                mode: 'no-cors' // CORSを無効にする
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                if (text === 'success') {
+                    window.location.href = 'page3.html';
+                } else {
+                    alert('送信に失敗しました。');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('送信に失敗しました。');
+            });
+        }
+    }
+</script>
 </body>
 </html>
