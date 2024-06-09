@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ようこそ</title>
+    <style>
+        .full_width {
+            margin-left: calc(150% - 100vw);
+            width: 200vw;
+        }
+
+        .full_height {
+            height: 200vh;
+        }
+    </style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>suumoランドへ<br>ようこそ！！</h1>
+        <p>開始するには下記のボタンを押してください。</p>
+        <p style="color: red;"><strong>※指示があるまではボタンを<br>押さないでください。</strong></p>
+        <button class="button" onclick="confirmExit()">開始</a>
+    </div>
+    <script>
+        function confirmExit() {
+            var confirmation = confirm('確認しましたか？');
+            if (confirmation) {
+                window.location.href = 'page2.html';
+            }
+        }
+    </script>
+</body>
+</html>

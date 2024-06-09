@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>終了</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>終了</h1>
+        <p>タイムが記録されました！<br>もしニックネーム等あれば...<br>下のテキストボックスに入力して送信してください！</p>
+        <p style="color: red;"><strong>※公序良俗に反するニックネームの入力は禁止です。(確認次第削除します。)</strong></p>
+        <form id="nicknameForm" onsubmit="return validateInput()">
+            <label for="nickname">ニックネーム:</label><br class="line-break">
+            <input type="text" class="text-box" id="nickname" name="nickname" placeholder="ニックネームを入力（必須）" required><br class="line-break">
+            <button type="submit" class="button">送信</button>
+        </form>
+    </div>
+
+    <script>
+        function validateInput() {
+            var nickname = document.getElementById('nickname').value;
+            if (nickname.trim() === '') {
+                alert('ニックネームを入力してください。');
+                return false; // フォーム送信を防止
+            } else {
+                // ニックネームが入力された場合、ページをリダイレクト
+                window.location.href = 'page4.html';
+                return false; // フォーム送信を防止
+            }
+        }
+    </script>
+</body>
+</html>

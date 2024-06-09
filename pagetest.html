@@ -1,0 +1,33 @@
+<!DOCTYPE htmml>
+<html lange="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viwportr" content="=width=device-width, initial-scale-scale=1.0">
+    <title>スコア入力</title>
+    <link rel="stylesheet" href="styles.css">
+<body>
+    <div class="container">
+        <h1>スコア入力</h1>
+        <p>以下の必要項目を入力してください。</p>
+        <form for="score" onsubmit="return validateInput()">
+            <label for="score">スコア</label><br class="line-break">
+            <input for="score" class="text-box" id="score" name="score" placeholder="スコアを入力(必須)" return><br class="line-break">
+            <button type="submit" class="button">送信</button>
+        </form>
+    </div>
+
+    <script>
+        function validateInput() {
+            var nickname = document.getElementById('score').value;
+            if (nickname.trim() === '') {
+                alert('スコアを入力してください。');
+                return false; // フォーム送信を防止
+            } else {
+                // ニックネームが入力された場合、ページをリダイレクト
+                window.location.href = 'page3.html';
+                return false; // フォーム送信を防止
+            }
+        }
+    </script>
+</body>
+</html>
