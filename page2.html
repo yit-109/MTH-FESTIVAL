@@ -12,7 +12,6 @@
         <p>終了ボタンを押すと戻れません</p>
         <h3 style="color: red;"><strong>※指示があるまではボタンは押さず<br>入力してお待ちください。</strong></h3>
         
-        <!-- 必須入力のテキストボックスを追加 -->
         <label for="nickname">ニックネーム:</label><br>
         <input type="text" class="text-box" id="nickname" name="nickname" placeholder="ニックネームを入力（必須）"  required><br class="line-break">
 
@@ -22,35 +21,47 @@
         <label for="score">スコア:</label><br>
         <input type="number" class="text-box" id="score" name="score" placeholder="スコアを入力（必須）" required><br class="line-break"><br>
         
-        <button class="button" onclick="confirmExit()">終了</button>
+        <button class="button" onclick="submitData()">終了</button>
     </div>
 
     <script>
-        function validateInput() {
+        function submitData() {
             var nickname = document.getElementById('nickname').value;
-            if (nickname.trim() === '') {
-                alert('ニックネームを入力してください。');
-                return false; // フォーム送信を防止
-            } else {
-                // ニックネームが入力された場合、ページをリダイレクト
-                window.location.href = 'page4.html';
-                return false; // フォーム送信を防止
-            }
-        }
-
-        function confirmExit() {
             var name = document.getElementById('name').value;
             var score = document.getElementById('score').value;
-            var nickname = document.getElementById('nickname').value;
             
             if (!nickname.trim() || !name.trim() || !score.trim()) {
                 alert('必要項目を入力してください。');
                 return;
             }
-            
+
             var confirmation = confirm('確認しましたか？');
             if (confirmation) {
-                window.location.href = 'page3.html';
+                var data = {
+                    nickname: nickname,
+                    name: name,
+                    score: score
+                };
+
+                fetch('https://script.google.com/macros/s/AKfycbz4dE1uUH5rmLdDO7EdO37M6v6UucaR70aefWAQDLuPEOWuxaCoOvUI-g5yFdRwi1-h/exec', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.text())
+                .then(text => {
+                    if (text === 'success') {
+                        window.location.href = 'page3.html';
+                    } else {
+                        alert('送信に失敗しました。');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('送信に失敗しました。');
+                });
             }
         }
     </script>
