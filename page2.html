@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -13,18 +12,64 @@
         <p>終了ボタンを押すと戻れません</p>
         <h3 style="color: red;"><strong>※指示があるまではボタンは押さず<br>入力してお待ちください。</strong></h3>
         
-        <form id="dataForm" action="https://script.google.com/macros/s/AKfycbzmO5FtkQ6bwi3CYqeY66ybjFdCh5vPIoykuOboVq7ipZdUHNfwP5qS9_lGzlcaKiDVgA/exec" method="post">
-            <label for="nickname">ニックネーム:</label><br>
-            <input type="text" class="text-box" id="nickname" name="nickname" placeholder="ニックネームを入力（必須）" required><br class="line-break">
+        <label for="nickname">ニックネーム:</label><br>
+        <input type="text" class="text-box" id="nickname" name="nickname" placeholder="ニックネームを入力（必須）" required><br class="line-break">
 
-            <label for="name">名前:</label><br>
-            <input type="text" class="text-box" id="name" name="name" placeholder="氏名を入力（必須）" required><br class="line-break">
-            
-            <label for="score">スコア:</label><br>
-            <input type="number" class="text-box" id="score" name="score" placeholder="スコアを入力（必須）" required><br class="line-break"><br>
-            
-            <button type="submit" class="button">終了</button>
-        </form>
+        <label for="name">名前:</label><br>
+        <input type="text" class="text-box" id="name" name="name" placeholder="氏名を入力（必須）" required><br class="line-break">
+        
+        <label for="score">スコア:</label><br>
+        <input type="number" class="text-box" id="score" name="score" placeholder="スコアを入力（必須）" required><br class="line-break"><br>
+        
+        <button class="button" onclick="submitData()">終了</button>
     </div>
+
+<script>
+    function submitData() {
+        var nickname = document.getElementById('nickname').value;
+        var name = document.getElementById('name').value;
+        var score = document.getElementById('score').value;
+
+        if (!nickname.trim() || !name.trim() || !score.trim()) {
+            alert('必要項目を入力してください。');
+            return;
+        }
+
+        var confirmation = confirm('確認しましたか？');
+        if (confirmation) {
+            var data = {
+                nickname: nickname,
+                name: name,
+                score: score
+            };
+
+            fetch('https://script.google.com/macros/s/AKfycbzmO5FtkQ6bwi3CYqeY66ybjFdCh5vPIoykuOboVq7ipZdUHNfwP5qS9_lGzlcaKiDVgA/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+                mode: 'no-cors' // CORSを無効にする
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                if (text === 'success') {
+                    window.location.href = 'page3.html';
+                } else {
+                    alert('送信に失敗しました。');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('送信に失敗しました。');
+            });
+        }
+    }
+</script>
 </body>
 </html>
