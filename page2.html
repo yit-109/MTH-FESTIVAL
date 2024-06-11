@@ -11,7 +11,7 @@
         <h1>カウント中...</h1>
         <p>終了ボタンを押すと戻れません</p>
         <h3 style="color: red;"><strong>※指示があるまではボタンは押さず<br>入力してお待ちください。</strong></h3>
-        <form id="dataForm" action="https://script.google.com/macros/s/AKfycbwhm7_aC9iTlCT_K1iicPOFlvHI8dbsM0vDO1vSCoFZ6N1vXdiFqup5AqA7oAOkCcTZ/exec" method="post">
+        <form id="dataForm">
             <label for="nickname">ニックネーム:</label><br>
             <input type="text" class="text-box" id="nickname" name="nickname" placeholder="ニックネームを入力（必須）" required><br class="line-break">
             <label for="name">名前:</label><br>
@@ -25,24 +25,22 @@
 
     <script>
         document.getElementById('dataForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting the traditional way
-            
-            // Perform form submission via fetch or XMLHttpRequest
+            event.preventDefault(); // デフォルトのフォーム送信を防止
+
             const formData = new FormData(this);
 
-            fetch(this.action, {
-                method: this.method,
+            fetch('https://script.google.com/macros/s/AKfycbwhm7_aC9iTlCT_K1iicPOFlvHI8dbsM0vDO1vSCoFZ6N1vXdiFqup5AqA7oAOkCcTZ/exec', {
+                method: 'POST',
                 body: formData
-            }).then(response => {
-                if (response.ok) {
-                    window.location.href = 'page3.html'; // Redirect to page3.html on success
-                } else {
-                    alert('フォームの送信に失敗しました。もう一度お試しください。');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('フォームの送信中にエラーが発生しました。');
-            });
+            }).then(response => response.json())
+              .then(data => {
+                  console.log('Success:', data);
+                  window.location.href = 'page3.html'; // 成功したらpage3.htmlにリダイレクト
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  alert('フォームの送信中にエラーが発生しました。');
+              });
         });
     </script>
 </body>
