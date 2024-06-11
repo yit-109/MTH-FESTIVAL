@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -23,5 +22,28 @@
             <button type="submit" class="button">終了</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+            
+            // Perform form submission via fetch or XMLHttpRequest
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: this.method,
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = 'page3.html'; // Redirect to page3.html on success
+                } else {
+                    alert('フォームの送信に失敗しました。もう一度お試しください。');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('フォームの送信中にエラーが発生しました。');
+            });
+        });
+    </script>
 </body>
 </html>
