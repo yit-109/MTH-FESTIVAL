@@ -24,24 +24,13 @@
     </div>
 
     <script>
-        document.getElementById('dataForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // デフォルトのフォーム送信を防止
-
-            const formData = new FormData(this);
-
-            fetch('https://script.google.com/macros/s/AKfycbwhm7_aC9iTlCT_K1iicPOFlvHI8dbsM0vDO1vSCoFZ6N1vXdiFqup5AqA7oAOkCcTZ/exec', {
-                method: 'POST',
-                body: formData
-            }).then(response => response.json())
-              .then(data => {
-                  console.log('Success:', data);
-                  window.location.href = 'page3.html'; // 成功したらpage3.htmlにリダイレクト
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  alert('フォームの送信中にエラーが発生しました。');
-              });
-        });
+      document.getElementById('myForm').onsubmit = function() {
+        google.script.run.withSuccessHandler(function() {
+          window.location.href = 'page3.html';
+        }).doPost(new FormData(this));
+        return false; // Prevent default form submission
+      };
     </script>
+    
 </body>
 </html>
