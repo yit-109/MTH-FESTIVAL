@@ -11,8 +11,8 @@
         <h1>カウント中...</h1>
         <p>終了ボタンを押すと戻れません</p>
         <h3 style="color: red;"><strong>※指示があるまではボタンは押さず<br>入力してお待ちください。</strong></h3>
-        <form id="dataForm" action="https://script.google.com/macros/s/AKfycbwhm7_aC9iTlCT_K1iicPOFlvHI8dbsM0vDO1vSCoFZ6N1vXdiFqup5AqA7oAOkCcTZ/exec" method="post">
-        <label for="nickname">ニックネーム:</label><br>
+        <form id="dataForm">
+            <label for="nickname">ニックネーム:</label><br>
             <input type="text" class="text-box" id="nickname" name="nickname" placeholder="ニックネームを入力（必須）" required><br class="line-break">
             <label for="name">名前:</label><br>
             <input type="text" class="text-box" id="name" name="name" placeholder="氏名を入力（必須）" required><br class="line-break">
@@ -24,13 +24,20 @@
     </div>
 
     <script>
-      document.getElementById('myForm').onsubmit = function() {
-        google.script.run.withSuccessHandler(function() {
-          window.location.href = 'https://yit-109.github.io/MTH-FESTIVAL/page3.html';
-        }).doPost(new FormData(this));
-        return false; // Prevent default form submission
-      };
+        document.getElementById('dataForm').onsubmit = function(event) {
+            event.preventDefault(); // デフォルトのフォーム送信を防ぐ
+            var formData = new FormData(this);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://script.google.com/macros/s/AKfycbwhm7_aC9iTlCT_K1iicPOFlvHI8dbsM0vDO1vSCoFZ6N1vXdiFqup5AqA7oAOkCcTZ/exec");
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    window.location.href = 'https://yit-109.github.io/MTH-FESTIVAL/page3.html';
+                } else {
+                    alert("データの送信に失敗しました。もう一度お試しください。");
+                }
+            };
+            xhr.send(formData);
+        };
     </script>
-    
 </body>
 </html>
