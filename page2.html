@@ -26,16 +26,16 @@
     <script>
         document.getElementById('dataForm').onsubmit = function(event) {
             event.preventDefault(); // デフォルトのフォーム送信を防ぐ
-            var formData = new FormData(this);
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "https://script.google.com/macros/s/AKfycbwhm7_aC9iTlCT_K1iicPOFlvHI8dbsM0vDO1vSCoFZ6N1vXdiFqup5AqA7oAOkCcTZ/exec");
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // Content-Typeを設定する
             xhr.onload = function() {
-                console.log(xhr.responseText); // レスポンスの内容をログ出力
+                console.log(xhr.responseText);
                 if (xhr.status === 200 && xhr.responseText.trim() === "Success") {
                     window.location.href = 'page3.html';
                 } else {
                     alert("データの送信に失敗しました。もう一度お試しください。");
-                }
+                } 
             };
             xhr.send(formData);
         };
