@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>カウント中</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript">
+        function foo(response) {
+            var meta = response.meta;
+            var data = response.data;
+            console.log(meta);
+            console.log(data);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var script = document.createElement('script');
+            script.src = 'https://api.github.com?callback=foo';
+            document.getElementsByTagName('head')[0].appendChild(script);
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -32,7 +46,7 @@
             xhr.onload = function() {
                 console.log(xhr.responseText); // レスポンスの内容をログ出力
                 if (xhr.status === 200 && xhr.responseText.trim() === "Success") {
-                    window.location.href = 'page3.html';
+                    window.location.href = 'https://yit-109.github.io/MTH-FESTIVAL/page3.html';
                 } else {
                     alert("データの送信に失敗しました。もう一度お試しください。");
                 }
