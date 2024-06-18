@@ -18,6 +18,45 @@
             script.src = 'https://api.github.com?callback=foo';
             document.getElementsByTagName('head')[0].appendChild(script);
         });
+
+        function sendData(name, nickname, score) {
+            var url = 'https://script.google.com/macros/s/AKfycbwhm7_aC9iTlCT_K1iicPOFlvHI8dbsM0vDO1vSCoFZ6N1vXdiFqup5AqA7oAOkCcTZ/exec';
+            var data = {
+                name: name,
+                nickname: nickname,
+                score: score
+            };
+
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors', // CORSを有効にする
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.result === "Success") {
+                    window.location.href = 'https://yit-109.github.io/MTH-FESTIVAL/page3.html';
+                } else {
+                    alert("データの送信に失敗しました。もう一度お試しください。");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('dataForm').onsubmit = function(event) {
+                event.preventDefault(); // デフォルトのフォーム送信を防ぐ
+                var formData = new FormData(this);
+                var name = formData.get('name');
+                var nickname = formData.get('nickname');
+                var score = formData.get('score');
+                sendData(name, nickname, score);
+            };
+        });
     </script>
 </head>
 <body>
@@ -36,23 +75,5 @@
             <button type="submit" class="button">終了</button>
         </form>
     </div>
-
-    <script>
-        document.getElementById('dataForm').onsubmit = function(event) {
-            event.preventDefault(); // デフォルトのフォーム送信を防ぐ
-            var formData = new FormData(this);
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "https://script.google.com/macros/s/AKfycbwhm7_aC9iTlCT_K1iicPOFlvHI8dbsM0vDO1vSCoFZ6N1vXdiFqup5AqA7oAOkCcTZ/exec");
-            xhr.onload = function() {
-                console.log(xhr.responseText); // レスポンスの内容をログ出力
-                if (xhr.status === 200 && xhr.responseText.trim() === "Success") {
-                    window.location.href = 'https://yit-109.github.io/MTH-FESTIVAL/page3.html';
-                } else {
-                    alert("データの送信に失敗しました。もう一度お試しください。");
-                }
-            };
-            xhr.send(formData);
-        };
-    </script>
 </body>
 </html>
